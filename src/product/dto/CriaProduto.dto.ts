@@ -5,6 +5,7 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   IsUrl,
   IsUUID,
@@ -34,6 +35,7 @@ export class ImagemProdutoDTO {
 
 export class CriaProdutoDTO {
   @IsUUID(undefined, { message: 'ID de usuário inválido' })
+  @IsOptional()
   usuarioId: string;
 
   @IsString()
