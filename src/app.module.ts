@@ -11,10 +11,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
   UserModule, 
   ProdutoModule,
-  ConfigModule.forRoot({
-    isGlobal: true,
-
-  }),
+  ConfigModule.forRoot({isGlobal: true,}),
   TypeOrmModule.forRootAsync({
     useClass: PostgresConfigService,
     inject: [PostgresConfigService]
