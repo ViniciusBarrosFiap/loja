@@ -6,10 +6,14 @@ import { UserEntity } from "./validation/user.entity";
 import { v4 as uuid} from "uuid"
 import { UserListDTO } from "./dto/UserList.dto";
 import { UpdateUsertDTO } from "./dto/UpdateUser.dto";
+import { UserService } from "./user.service";
 @Controller("/users")//EndPoint da API, conseguimos executar os métodos http neste EndPoint
 export class UserController{
     
-    constructor(private userRepository: UserRepository){}
+    constructor(
+        private userRepository: UserRepository,
+        private userService: UserService
+    ){}
     
     //criando as métodos da api
     @Post() //Método POST
@@ -36,14 +40,8 @@ export class UserController{
 
     @Get()//Método GET
     async userList(){
-        const savedUsers = await this.userRepository.listUser();//Acessando a função listUser
-        const userList = savedUsers.map(
-            user => new UserListDTO(
-                user.id,
-                user.name
-            )
-        );
-        return userList;
+        const savedUsers = await this.userService.listAllUsers();//Acessando a função listUser
+        return savedUsers;
     }
     @Put("/:id")
     async updateUser(@Param("id") id: string, @Body() newData: UpdateUsertDTO){
