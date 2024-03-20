@@ -21,7 +21,6 @@ export class UsuarioController {
     private usuarioRepository: UsuarioRepository,
     private usuarioService: UsuarioService,
   ) {}
-
   @Post()
   async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
     const usuarioEntity = new UsuarioEntity();
