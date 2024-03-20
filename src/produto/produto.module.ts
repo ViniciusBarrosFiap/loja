@@ -1,11 +1,10 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
+import { UsuarioModule } from 'src/usuario/usuario.module';
 import { ProdutoController } from './produto.controller';
 import { ProdutoRepository } from './produto.repository';
-import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [UserModule],
+  imports: [UsuarioModule],
   controllers: [ProdutoController],
   providers: [ProdutoRepository],
 })

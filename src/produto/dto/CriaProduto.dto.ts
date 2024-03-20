@@ -1,11 +1,9 @@
-/* eslint-disable prettier/prettier */
 import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
   IsNotEmpty,
   IsNumber,
-  IsOptional,
   IsString,
   IsUrl,
   IsUUID,
@@ -25,7 +23,7 @@ export class CaracteristicaProdutoDTO {
 }
 
 export class ImagemProdutoDTO {
-  @IsUrl(undefined, { message: 'URL para imagem inválida' })
+  @IsUrl({ message: 'URL para imagem inválida' })
   url: string;
 
   @IsString()
@@ -35,7 +33,6 @@ export class ImagemProdutoDTO {
 
 export class CriaProdutoDTO {
   @IsUUID(undefined, { message: 'ID de usuário inválido' })
-  @IsOptional()
   usuarioId: string;
 
   @IsString()

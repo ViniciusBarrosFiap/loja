@@ -1,22 +1,22 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
-import { ProdutoModule } from './product/produto.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { ProdutoModule } from './produto/produto.module';
+import { UsuarioModule } from './usuario/usuario.module';
+import { PostgresConfigService } from './config/postgres.config.service';
 
 @Module({
   imports: [
-  UserModule, 
-  ProdutoModule,
-  ConfigModule.forRoot({isGlobal: true,}),
-  TypeOrmModule.forRootAsync({
-    useClass: PostgresConfigService,
-    inject: [PostgresConfigService]
-  })
-]  
+    UsuarioModule,
+    ProdutoModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      useClass: PostgresConfigService,
+      inject: [PostgresConfigService],
+    }),
+  ],
 })
-
 export class AppModule {}
