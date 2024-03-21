@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Injectable } from '@nestjs/common';
 import {
   registerDecorator,
@@ -15,6 +16,7 @@ export class EmailEhUnicoValidator implements ValidatorConstraintInterface {
 
   async validate(
     value: any,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     validationArguments?: ValidationArguments,
   ): Promise<boolean> {
     const usuarioComEmailExiste = await this.usuarioRepository.existeComEmail(
