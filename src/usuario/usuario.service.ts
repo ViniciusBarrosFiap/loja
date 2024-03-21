@@ -4,6 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { UsuarioEntity } from "./usuario.entity";
 import { Repository } from "typeorm";
 import { ListaUsuarioDTO } from "./dto/ListaUsuario.dto";
+import { AtualizaUsuarioDTO } from "./dto/AtualizaUsuario.dto";
 
 @Injectable()
 export class UsuarioService{
@@ -23,5 +24,13 @@ export class UsuarioService{
 
     async criaUsuario(usuarioEntity: UsuarioEntity){
         await this.usuarioRepository.save(usuarioEntity)
+    }
+
+    async atualizaUsuario(id:string, usuarioEntity: AtualizaUsuarioDTO){
+        this.usuarioRepository.update(id, usuarioEntity)
+    }
+
+    async removeUsuario(id: string){
+        this.usuarioRepository.delete(id)
     }
 }
