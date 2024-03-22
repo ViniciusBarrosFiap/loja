@@ -30,7 +30,7 @@ export class CaracteristicaProdutoDTO {
 export class ImagemProdutoDTO {
   id: string;
 
-  @IsUrl({ message: 'URL para imagem inválida' })
+  @IsUrl()
   url: string;
 
   @IsString()

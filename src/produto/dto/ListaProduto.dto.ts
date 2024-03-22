@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 class ListaCaracteristicaProdutoDTO {
   nome: string;
   descricao: string;
@@ -16,5 +15,4 @@ export class ListaProdutoDTO {
     readonly caracteristicas: ListaCaracteristicaProdutoDTO[],
     readonly imagens: ListaImagemProdutoDTO[],
   ) {}
-
 }

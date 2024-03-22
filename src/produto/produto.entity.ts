@@ -1,7 +1,14 @@
-/* eslint-disable prettier/prettier */
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import {ProdutoImagemEntity } from "./produto-imagem.entity";
-import { ProdutoCaracteristicaEntity} from "./produto-caracteisticas.entity";
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { ProdutoImagemEntity } from './produto-imagem.entity';
+import { ProdutoCaracteristicaEntity } from './produto-caracteisticas.entity';
 @Entity({ name: 'produtos' })
 export class ProdutoEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -26,15 +33,15 @@ export class ProdutoEntity {
   categoria: string;
 
   @OneToMany(
-    () => ProdutoImagemEntity,(produtoImageEntity) => 
-    produtoImageEntity.produto,
+    () => ProdutoImagemEntity,
+    (produtoImageEntity) => produtoImageEntity.produto,
     { cascade: true, eager: true },
   )
   imagens: ProdutoImagemEntity[];
 
   @OneToMany(
-    () => ProdutoCaracteristicaEntity, (produtoCaracteristicaEntity) => 
-    produtoCaracteristicaEntity.produto,
+    () => ProdutoCaracteristicaEntity,
+    (produtoCaracteristicaEntity) => produtoCaracteristicaEntity.produto,
     { cascade: true, eager: true },
   )
   caracteristicas: ProdutoCaracteristicaEntity[];
@@ -48,4 +55,5 @@ export class ProdutoEntity {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
 
+  [key: string]: any;
 }

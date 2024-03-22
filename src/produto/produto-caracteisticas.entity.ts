@@ -1,8 +1,6 @@
-/* eslint-disable prettier/prettier */
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ProdutoEntity } from "./produto.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ProdutoEntity } from './produto.entity';
 
-/* eslint-disable prettier/prettier */
 @Entity('produto_caracteristicas')
 export class ProdutoCaracteristicaEntity {
   @PrimaryGeneratedColumn('uuid')
