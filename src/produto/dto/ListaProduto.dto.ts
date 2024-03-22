@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 class ListaCaracteristicaProdutoDTO {
   nome: string;
   descricao: string;
@@ -9,13 +10,11 @@ class ListaImagemProdutoDTO {
 }
 
 export class ListaProdutoDTO {
-  id: string;
-  usuarioId: string;
-  nome: string;
-  valor: number;
-  quantidade: number;
-  descricao: string;
-  categoria: string;
-  caracteristicas: ListaCaracteristicaProdutoDTO[];
-  imagens: ListaImagemProdutoDTO[];
+  constructor(
+    readonly id: string,
+    readonly nome: string,
+    readonly caracteristicas: ListaCaracteristicaProdutoDTO[],
+    readonly imagens: ListaImagemProdutoDTO[],
+  ) {}
+
 }
