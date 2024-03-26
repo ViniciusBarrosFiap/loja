@@ -23,16 +23,10 @@ export class UsuarioController {
   ) {}
   @Post()
   async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
-    const usuarioEntity = new UsuarioEntity();
-    usuarioEntity.email = dadosDoUsuario.email;
-    usuarioEntity.senha = dadosDoUsuario.senha;
-    usuarioEntity.nome = dadosDoUsuario.nome;
-    usuarioEntity.id = uuid();
-
-    this.usuarioService.criaUsuario(usuarioEntity); //Utilizando o método criado no usuario.service
+    const usuarioCriado = await this.usuarioService.criaUsuario(dadosDoUsuario);
 
     return {
-      usuario: new ListaUsuarioDTO(usuarioEntity.id, usuarioEntity.nome),
+      usuario: new ListaUsuarioDTO(usuarioCriado.id, usuarioCriado.nome),
       messagem: 'usuário criado com sucesso',
     };
   }
