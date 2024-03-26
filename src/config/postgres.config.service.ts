@@ -24,7 +24,6 @@ export class PostgresConfigService implements TypeOrmOptionsFactory {
         ProdutoImagemEntity,
         ProdutoCaracteristicaEntity,
       ],
-      synchronize: true,
     };
   }
 }

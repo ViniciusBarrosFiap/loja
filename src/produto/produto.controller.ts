@@ -7,11 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { randomUUID } from 'crypto';
-
 import { AtualizaProdutoDTO } from './dto/atualizaProduto.dto';
 import { CriaProdutoDTO } from './dto/CriaProduto.dto';
-import { ProdutoEntity } from './produto.entity';
 import { ProdutoService } from './produto.service';
 
 @Controller('produtos')
