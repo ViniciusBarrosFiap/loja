@@ -3,40 +3,35 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
+  // Patch,
+  // Param,
+  // Delete,
+  Query,
 } from '@nestjs/common';
 import { PedidoService } from './pedido.service';
-import { CreatePedidoDto } from './dto/create-pedido.dto';
-import { UpdatePedidoDto } from './dto/update-pedido.dto';
+// import { UpdatePedidoDto } from './dto/update-pedido.dto';
+import { CriaPedidoDTO } from './dto/CriaPedido.dto';
 
 @Controller('pedido')
 export class PedidoController {
   constructor(private readonly pedidoService: PedidoService) {}
 
   @Post()
-  create(@Body() createPedidoDto: CreatePedidoDto) {
-    return this.pedidoService.create(createPedidoDto);
+  async criaPedido(
+    @Query('usuarioId') usuarioId: string,
+    @Body() dadosDoPedido: CriaPedidoDTO,
+  ) {
+    const pedidoCriado = await this.pedidoService.cadastraPedido(
+      usuarioId,
+      dadosDoPedido,
+    );
+    return pedidoCriado;
   }
 
   @Get()
-  findAll() {
-    return this.pedidoService.findAll();
-  }
+  async obtemPedidosDeUsuarios(@Query('usuarioId') usuarioId: string) {
+    const pedidos = await this.pedidoService.obtemPedidosDeUsuario(usuarioId);
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pedidoService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePedidoDto: UpdatePedidoDto) {
-    return this.pedidoService.update(+id, updatePedidoDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pedidoService.remove(+id);
+    return pedidos;
   }
 }
