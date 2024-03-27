@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import { PedidoEntity } from 'src/pedido/pedido.entity';
 import { ProdutoCaracteristicaEntity } from 'src/produto/produto-caracteisticas.entity';
 import { ProdutoImagemEntity } from 'src/produto/produto-imagem.entity';
 import { ProdutoEntity } from 'src/produto/produto.entity';
@@ -18,12 +19,8 @@ export class PostgresConfigService implements TypeOrmOptionsFactory {
       username: this.configService.get<string>('DB_USERNAME'),
       password: this.configService.get<string>('DB_PASSWORD'),
       database: this.configService.get<string>('DB_NAME'),
-      entities: [
-        UsuarioEntity,
-        ProdutoEntity,
-        ProdutoImagemEntity,
-        ProdutoCaracteristicaEntity,
-      ],
+      entities: [__dirname + '/../**/*.entity.{js,ts}'],
+      synchronize: true,
     };
   }
 }

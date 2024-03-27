@@ -1,8 +1,10 @@
+import { PedidoEntity } from '../pedido/pedido.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,4 +25,6 @@ export class UsuarioEntity {
   updatedAt: string;
   @DeleteDateColumn({ name: 'deleted_at' }) //Define colunas de quando foi deletado
   deletedAt: string;
+  @OneToMany(() => PedidoEntity, (pedido) => pedido.usuario)
+  pedidos: PedidoEntity[];
 }
