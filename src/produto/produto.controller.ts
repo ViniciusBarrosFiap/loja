@@ -34,7 +34,7 @@ export class ProdutoController {
     return this.produtoService.listaProdutos();
   }
 
-  @Put('/:id')
+  @Put(':id')
   async atualiza(
     @Param('id') id: string,
     @Body() dadosProduto: AtualizaProdutoDTO,
