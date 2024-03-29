@@ -6,6 +6,9 @@ import { Repository } from 'typeorm';
 import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
 import { CriaProdutoDTO } from './dto/CriaProduto.dto';
 
+//Este arquivo é responsável por conter a lógica com as regras de negócio do projeto
+//Nesse arquivo usamos funções do repository
+
 @Injectable()
 export class ProdutoService {
   constructor(

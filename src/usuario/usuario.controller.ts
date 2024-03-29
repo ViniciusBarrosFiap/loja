@@ -13,6 +13,9 @@ import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
 import { UsuarioRepository } from './usuario.repository';
 import { UsuarioService } from './usuario.service';
 
+//Este arquivo é resposável por receber as solicitações http e chamar os serviços
+//adequados para cada solicitação
+
 @Controller('/usuarios')
 export class UsuarioController {
   constructor(

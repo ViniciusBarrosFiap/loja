@@ -6,6 +6,9 @@ import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
 import { AtualizaUsuarioDTO } from './dto/AtualizaUsuario.dto';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 
+//Este arquivo é responsável por conter a lógica com as regras de negócio do projeto
+//Nesse arquivo usamos funções do repository
+
 @Injectable()
 export class UsuarioService {
   constructor(

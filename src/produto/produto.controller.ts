@@ -11,6 +11,8 @@ import { AtualizaProdutoDTO } from './dto/atualizaProduto.dto';
 import { CriaProdutoDTO } from './dto/CriaProduto.dto';
 import { ProdutoService } from './produto.service';
 
+//Este arquivo é resposável por receber as solicitações http e chamar os serviços
+//adequados para cada solicitação
 @Controller('produtos')
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
