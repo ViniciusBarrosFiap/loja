@@ -1,33 +1,34 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import {
   registerDecorator,
-  ValidationArguments,
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { UsuarioRepository } from '../usuario.repository';
+import { UsuarioService } from '../usuario.service';
 
 @Injectable()
 @ValidatorConstraint({ async: true })
 export class EmailEhUnicoValidator implements ValidatorConstraintInterface {
-  constructor(private usuarioRepository: UsuarioRepository) {}
+  constructor(private usuarioService: UsuarioService) {}
 
-  async validate(
-    value: any,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    validationArguments?: ValidationArguments,
-  ): Promise<boolean> {
-    const usuarioComEmailExiste = await this.usuarioRepository.existeComEmail(
-      value,
-    );
-    return !usuarioComEmailExiste;
+  async validate(value: any): Promise<boolean> {
+    try {
+      const usuarioComEmailExiste = await this.usuarioService.buscaPorEmail(
+        value,
+      );
+      return !usuarioComEmailExiste;
+    } catch (erro) {
+      if (erro instanceof NotFoundException) {
+        return true;
+      }
+      return erro;
+    }
   }
 }
 
 export const EmailEhUnico = (opcoesDeValidacao: ValidationOptions) => {
-  return (objeto: Object, propriedade: string) => {
+  return (objeto: object, propriedade: string) => {
     registerDecorator({
       target: objeto.constructor,
       propertyName: propriedade,

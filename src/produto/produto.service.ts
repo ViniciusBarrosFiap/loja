@@ -19,13 +19,7 @@ export class ProdutoService {
   async criaProduto(dadosProduto: CriaProdutoDTO) {
     const produtoEntity = new ProdutoEntity();
 
-    produtoEntity.nome = dadosProduto.nome;
-    produtoEntity.valor = dadosProduto.valor;
-    produtoEntity.quantidadeDisponivel = dadosProduto.quantidadeDisponivel;
-    produtoEntity.descricao = dadosProduto.descricao;
-    produtoEntity.categoria = dadosProduto.categoria;
-    produtoEntity.caracteristicas = dadosProduto.caracteristicas;
-    produtoEntity.imagens = dadosProduto.imagens;
+    Object.assign(produtoEntity, dadosProduto as ProdutoEntity);
 
     return this.produtoRepository.save(produtoEntity);
   }
@@ -56,7 +50,7 @@ export class ProdutoService {
         throw new NotFoundException('O produto não foi encontrado');
       }
       Object.assign(entityName, novosDados);
-      await this.produtoRepository.save(entityName);
+      return this.produtoRepository.save(entityName);
     } catch (error) {
       console.error('Erro ao atualizar o produto:', error);
       // Aqui você pode decidir se deseja lançar a exceção novamente ou retornar uma resposta personalizada
@@ -65,6 +59,9 @@ export class ProdutoService {
   }
 
   async deletaProduto(id: string) {
-    await this.produtoRepository.delete(id);
+    const resultado = await this.produtoRepository.delete(id);
+    if (!resultado.affected) {
+      throw new NotFoundException(`Não existe um produto com o ID "${id}"`);
+    }
   }
 }
