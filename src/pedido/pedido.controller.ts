@@ -16,7 +16,7 @@ import { AtualizaPedidoDTO } from './dto/AtualizaPedido.dto';
 
 //Este arquivo é resposável por receber as solicitações http e chamar os serviços
 //adequados para cada solicitação
-@Controller('pedido')
+@Controller('pedidos')
 export class PedidoController {
   constructor(private readonly pedidoService: PedidoService) {}
 
