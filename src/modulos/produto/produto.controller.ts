@@ -1,3 +1,4 @@
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import {
   Body,
   Controller,
@@ -6,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AtualizaProdutoDTO } from './dto/atualizaProduto.dto';
 import { CriaProdutoDTO } from './dto/CriaProduto.dto';
@@ -34,6 +36,13 @@ export class ProdutoController {
     return this.produtoService.listaProdutos();
   }
 
+  @Get(':id')
+  @UseInterceptors(CacheInterceptor)
+  async buscaProdutoPorId(@Param('id') id: string) {
+    const produto = this.produtoService.encontraPorId(id);
+    console.log('buscando');
+    return produto;
+  }
   @Put(':id')
   async atualiza(
     @Param('id') id: string,

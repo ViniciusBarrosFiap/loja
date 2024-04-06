@@ -43,6 +43,22 @@ export class ProdutoService {
     return produtosLista;
   }
 
+  async encontraPorId(id: string) {
+    const produtoEncontrado = await this.produtoRepository.findOne({
+      where: { id },
+      relations: {
+        imagens: true,
+        caracteristicas: true,
+      },
+    });
+
+    if (!produtoEncontrado) {
+      throw new NotFoundException('Produto com id não encontrado');
+    }
+
+    return produtoEncontrado;
+  }
+
   async atualizaProduto(id: string, novosDados: AtualizaProdutoDTO) {
     try {
       const entityName = await this.produtoRepository.findOneBy({ id });
