@@ -32,6 +32,7 @@ export class ProdutoController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   async listaTodos() {
     return this.produtoService.listaProdutos();
   }
@@ -43,6 +44,7 @@ export class ProdutoController {
     console.log('buscando');
     return produto;
   }
+
   @Put(':id')
   async atualiza(
     @Param('id') id: string,

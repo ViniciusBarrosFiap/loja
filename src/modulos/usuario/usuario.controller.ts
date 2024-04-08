@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { HashSenhaPipe } from '../../recursos/pipes/hash-senha.pipe';
 import { AtualizaUsuarioDTO } from './dto/AtualizaUsuario.dto';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
@@ -23,9 +24,15 @@ export class UsuarioController {
     private usuarioService: UsuarioService,
   ) {}
   @Post()
-  async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
-    const usuarioCriado = await this.usuarioService.criaUsuario(dadosDoUsuario);
-
+  async criaUsuario(
+    @Body() { senha, ...dadosDoUsuario }: CriaUsuarioDTO,
+    @Body('senha', HashSenhaPipe) senhaHasheada: string,
+  ) {
+    const usuarioCriado = await this.usuarioService.criaUsuario({
+      ...dadosDoUsuario,
+      senha: senhaHasheada,
+    });
+    console.log(usuarioCriado);
     return {
       usuario: new ListaUsuarioDTO(usuarioCriado.id, usuarioCriado.nome),
       messagem: 'usuário criado com sucesso',
