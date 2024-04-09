@@ -3,20 +3,20 @@ import {
   Get,
   Post,
   Body,
-  // Patch,
-  // Param,
-  // Delete,
   Query,
   Patch,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { PedidoService } from './pedido.service';
 import { CriaPedidoDTO } from './dto/CriaPedido.dto';
 import { AtualizaPedidoDTO } from './dto/AtualizaPedido.dto';
+import { AutenticacaoGuard } from '../autenticacao/autenticacao.guard';
 
 //Este arquivo é resposável por receber as solicitações http e chamar os serviços
 //adequados para cada solicitação
 @Controller('pedidos')
+@UseGuards(AutenticacaoGuard)
 export class PedidoController {
   constructor(private readonly pedidoService: PedidoService) {}
 
