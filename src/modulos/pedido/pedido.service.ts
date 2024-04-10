@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PedidoEntity } from './pedido.entity';
@@ -111,13 +112,20 @@ export class PedidoService {
     });
   }
 
-  async atualizaPedido(id: string, dto: AtualizaPedidoDTO) {
-    const pedido = await this.pedidoRepository.findOneBy({ id });
-
-    // throw new Error('Simulando erro no banco');
+  async atualizaPedido(id: string, dto: AtualizaPedidoDTO, usuarioId: string) {
+    const pedido = await this.pedidoRepository.findOne({
+      where: { id },
+      relations: { usuario: true },
+    });
 
     if (pedido === null) {
       throw new NotFoundException('O pedido não foi encontrado');
+    }
+
+    if (pedido.usuario.id !== usuarioId) {
+      throw new ForbiddenException(
+        'Você não tem autorizaçõ para atualizar esse pedido',
+      );
     }
     Object.assign(pedido, dto as PedidoEntity);
 

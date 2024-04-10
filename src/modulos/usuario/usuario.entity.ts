@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'usuarios' }) //Classificando como entidade e o nome
 export class UsuarioEntity {
@@ -17,6 +18,7 @@ export class UsuarioEntity {
   nome: string;
   @Column({ name: 'email', length: 70, nullable: false })
   email: string;
+  @Exclude()
   @Column({ name: 'senha', length: 255, nullable: false })
   senha: string;
   @CreateDateColumn({ name: 'created_at' }) //Define colunas de quando foi criado

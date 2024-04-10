@@ -1,9 +1,9 @@
 import {
   Controller,
   Get,
+  Req,
   Post,
   Body,
-  Query,
   Patch,
   Param,
   UseGuards,
@@ -11,7 +11,10 @@ import {
 import { PedidoService } from './pedido.service';
 import { CriaPedidoDTO } from './dto/CriaPedido.dto';
 import { AtualizaPedidoDTO } from './dto/AtualizaPedido.dto';
-import { AutenticacaoGuard } from '../autenticacao/autenticacao.guard';
+import {
+  AutenticacaoGuard,
+  RequisicaoComUsuario,
+} from '../autenticacao/autenticacao.guard';
 
 //Este arquivo é resposável por receber as solicitações http e chamar os serviços
 //adequados para cada solicitação
@@ -22,18 +25,23 @@ export class PedidoController {
 
   @Post()
   async criaPedido(
-    @Query('usuarioId') usuarioId: string,
+    @Req() req: RequisicaoComUsuario,
     @Body() dadosDoPedido: CriaPedidoDTO,
   ) {
+    const usuarioId = req.usuario.sub;
     const pedidoCriado = await this.pedidoService.cadastraPedido(
       usuarioId,
       dadosDoPedido,
     );
-    return pedidoCriado;
+    return {
+      mensagem: 'pedido feito com sucesso',
+      pedido: pedidoCriado,
+    };
   }
 
   @Get()
-  async obtemPedidosDeUsuarios(@Query('usuarioId') usuarioId: string) {
+  async obtemPedidosDeUsuarios(@Req() req: RequisicaoComUsuario) {
+    const usuarioId = req.usuario.sub;
     const pedidos = await this.pedidoService.obtemPedidosDeUsuario(usuarioId);
 
     return pedidos;
@@ -41,9 +49,16 @@ export class PedidoController {
 
   @Patch(':id')
   async atualizaPedido(
+    @Req() req: RequisicaoComUsuario,
     @Param('id') pedidoId: string,
     @Body() dadosDeAtualizacao: AtualizaPedidoDTO,
   ) {
-    return this.pedidoService.atualizaPedido(pedidoId, dadosDeAtualizacao);
+    const usuarioId = req.usuario.sub;
+    const pedidoAtualizado = await this.pedidoService.atualizaPedido(
+      pedidoId,
+      dadosDeAtualizacao,
+      usuarioId,
+    );
+    return pedidoAtualizado;
   }
 }

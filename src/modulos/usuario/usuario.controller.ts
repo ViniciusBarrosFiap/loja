@@ -34,7 +34,11 @@ export class UsuarioController {
     });
     console.log(usuarioCriado);
     return {
-      usuario: new ListaUsuarioDTO(usuarioCriado.id, usuarioCriado.nome),
+      usuario: new ListaUsuarioDTO(
+        usuarioCriado.id,
+        usuarioCriado.nome,
+        usuarioCriado.email,
+      ),
       messagem: 'usuário criado com sucesso',
     };
   }
