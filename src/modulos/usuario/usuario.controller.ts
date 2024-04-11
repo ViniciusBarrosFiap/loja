@@ -11,7 +11,7 @@ import { HashSenhaPipe } from '../../recursos/pipes/hash-senha.pipe';
 import { AtualizaUsuarioDTO } from './dto/AtualizaUsuario.dto';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
-import { UsuarioRepository } from './usuario.repository';
+
 import { UsuarioService } from './usuario.service';
 
 //Este arquivo é resposável por receber as solicitações http e chamar os serviços
@@ -19,10 +19,7 @@ import { UsuarioService } from './usuario.service';
 
 @Controller('/usuarios')
 export class UsuarioController {
-  constructor(
-    private usuarioRepository: UsuarioRepository,
-    private usuarioService: UsuarioService,
-  ) {}
+  constructor(private usuarioService: UsuarioService) {}
   @Post()
   async criaUsuario(
     @Body() { senha, ...dadosDoUsuario }: CriaUsuarioDTO,
