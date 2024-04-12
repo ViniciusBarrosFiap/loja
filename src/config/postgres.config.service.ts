@@ -1,25 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
-// import { PedidoEntity } from 'src/pedido/pedido.entity';
-// import { ProdutoCaracteristicaEntity } from 'src/produto/produto-caracteisticas.entity';
-// import { ProdutoImagemEntity } from 'src/produto/produto-imagem.entity';
-// import { ProdutoEntity } from 'src/produto/produto.entity';
-// import { UsuarioEntity } from 'src/usuario/usuario.entity';
 
-@Injectable()
+@Injectable() //Define a classe como injetável
 export class PostgresConfigService implements TypeOrmOptionsFactory {
+  //Inicia váriavel com as funções do ConfigService
   constructor(private configService: ConfigService) {}
-
+  //Configura os dados para conexão com o banco de dados
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
-      type: 'postgres',
-      host: this.configService.get<string>('DB_HOST'),
-      port: this.configService.get<number>('DB_PORT'),
-      username: this.configService.get<string>('DB_USERNAME'),
-      password: this.configService.get<string>('DB_PASSWORD'),
-      database: this.configService.get<string>('DB_NAME'),
-      entities: [__dirname + '/../**/*.entity.{js,ts}'],
+      type: 'postgres', //Tipo do banco de dados
+      host: this.configService.get<string>('DB_HOST'), //Host do DB
+      port: this.configService.get<number>('DB_PORT'), //Porta do DB
+      username: this.configService.get<string>('DB_USERNAME'), //Username para login do DB
+      password: this.configService.get<string>('DB_PASSWORD'), //Senha para login do DB
+      database: this.configService.get<string>('DB_NAME'), //Nome do database no banco
+      entities: [__dirname + '/../**/*.entity.{js,ts}'], //entidades do DB
     };
   }
 }
