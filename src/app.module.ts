@@ -16,29 +16,35 @@ import { redisStore } from 'cache-manager-redis-yet';
 import { AutenticacaoModule } from './modulos/autenticacao/autenticacao.module';
 import { LoggerGlobalInterceptor } from './recursos/interceptores/logger-global.interceptor';
 @Module({
+  //Define as classes que fazem parte da aplicação principal com suas funcionalidades
   imports: [
     UsuarioModule,
     ProdutoModule,
+    //Configura as configurações de modo global para toda aplicação
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    //Modulo para integrar o TypeOrm com o nest
     TypeOrmModule.forRootAsync({
-      useClass: PostgresConfigService,
-      inject: [PostgresConfigService],
+      useClass: PostgresConfigService, //Injeta configurações do banco de dados (PostgresSQL)
+      inject: [PostgresConfigService], //Injeta as funcionalidades que serão aplicadas no banco de dados
     }),
     PedidoModule,
+    //Configurando o gerenciamento de cache de forma assincrona
     CacheModule.registerAsync({
+      //Configurando o redis como gerenciador de cache
       useFactory: async () => ({
         store: await redisStore({ ttl: 10 * 1000 }),
       }),
-      isGlobal: true,
+      isGlobal: true, //Tornando a configuração global
     }),
     AutenticacaoModule,
   ],
+  //Provedores de outras funções que serão utilizadas no código
   providers: [
     {
-      provide: APP_FILTER,
-      useClass: filtroDeExcecaoGlobal,
+      provide: APP_FILTER, //Filtro de exeções
+      useClass: filtroDeExcecaoGlobal, //Filtro para tratar exeçõe globalmente
     },
     {
       provide: APP_INTERCEPTOR,
@@ -48,7 +54,7 @@ import { LoggerGlobalInterceptor } from './recursos/interceptores/logger-global.
       provide: APP_INTERCEPTOR,
       useClass: LoggerGlobalInterceptor,
     },
-    ConsoleLogger,
+    ConsoleLogger, //Log de operações que ocorrem na aplicação
   ],
 })
 export class AppModule {}
