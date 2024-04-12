@@ -12,8 +12,9 @@ import {
 } from 'class-validator';
 import { ProdutoEntity } from '../produto.entity';
 
+//Define o DTO e regras para a criação de um produto
 export class CaracteristicaProdutoDTO {
-  id: string;
+  id: string; //Id da caracteristica
 
   @IsString()
   @IsNotEmpty({ message: 'Nome da cadasterística não pode ser vazio' })
@@ -23,11 +24,11 @@ export class CaracteristicaProdutoDTO {
   @IsNotEmpty({ message: 'Descrição da característica não pode ser vazio' })
   descricao: string;
 
-  produto: ProdutoEntity;
+  produto: ProdutoEntity; //Produto que está relacionada
 }
 
 export class ImagemProdutoDTO {
-  id: string;
+  id: string; //Id da imagem
 
   @IsUrl()
   url: string;
@@ -36,7 +37,7 @@ export class ImagemProdutoDTO {
   @IsNotEmpty({ message: 'Descrição da imagem não pode ser vazia' })
   descricao: string;
 
-  produto: ProdutoEntity;
+  produto: ProdutoEntity; //Produto que está relacionado
 }
 
 export class CriaProdutoDTO {
@@ -60,14 +61,14 @@ export class CriaProdutoDTO {
   descricao: string;
 
   @ValidateNested()
-  @IsArray()
-  @ArrayMinSize(3)
+  @IsArray() //Confirma um array
+  @ArrayMinSize(3) //Tamanho minimo do array
   @Type(() => CaracteristicaProdutoDTO)
   caracteristicas: CaracteristicaProdutoDTO[];
 
   @ValidateNested()
-  @IsArray()
-  @ArrayMinSize(1)
+  @IsArray() //Confirma um array
+  @ArrayMinSize(1) //Tamanho minimo do array
   @Type(() => ImagemProdutoDTO)
   imagens: ImagemProdutoDTO[];
 
